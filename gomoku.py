@@ -15,9 +15,9 @@ def all_print(arr, turn, tmp):
     if (tmp == turn):
         print("Error retry")
     if turn % 2 == 0:
-        print("Player 1")
+        print("Player 1\nTurn:", turn + 1)
     else:
-        print("Player 2")
+        print("Player 2\nTurn:", turn + 1)
     return turn
 
 while True:
