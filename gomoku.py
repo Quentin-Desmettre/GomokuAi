@@ -1,8 +1,6 @@
 #!/bin/python
 
 from math import *
-from operator import le
-import string
 from print_grid import *
 from win_condition import print_winner
 
@@ -17,6 +15,13 @@ def all_print(arr, turn, tmp):
         print("Player 2\nTurn:", turn + 1)
     return turn
 
+def verify_intput(ltr, nb):
+    if ltr < 0 or ltr > 19:
+        return 1
+    if nb < 0 or nb > 19:
+        return 1
+    return 0
+
 def main():
     arr = [[0 for i in range(20)] for j in range(20)]
     get = []
@@ -29,12 +34,13 @@ def main():
         if len(get) > 3:
             continue
         ltr = ord(get[0][0]) - 65
-        nb = int(get[1:]) - 1
+        try:
+            nb = int(get[1:]) - 1
+        except:
+            continue
         if ltr > 20:
             ltr -= 32
-        if ltr < 0 or ltr > 19:
-            continue
-        if nb < 0 or nb > 19:
+        if (verify_intput(ltr, nb) == 1):
             continue
         if arr[nb][ltr] == 0:
             if turn % 2 == 0:
