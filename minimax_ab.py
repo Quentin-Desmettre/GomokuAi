@@ -1,6 +1,7 @@
+from math import isinf
 from tree_first import possible_moves
 from math import inf
-from eval_pos import analyze_grid_for_color, end_of_sequence
+from eval_pos import analyze_grid_for_color
 
 def analyze_ia_pos(grid, is_ia_turn):
     ia_score = analyze_grid_for_color(grid, -1, is_ia_turn)
@@ -62,13 +63,31 @@ def minimaxSearchAB(depth, grid, is_max, alpha, beta):
                 bestMove[2] = move[1]
     return bestMove
 
+def check_finishing_move(grid):
+    all_moves = possible_moves(grid)
+
+    for move in all_moves:
+        grid[move[0]][move[1]] = -1
+        tmp = analyze_grid_for_color(grid, -1, True)
+        grid[move[0]][move[1]] = 0
+
+        if isinf(tmp):
+            return [1, move]
+
+        grid[move[0]][move[1]] = 1
+        tmp = analyze_grid_for_color(grid, 1, True)
+        grid[move[0]][move[1]] = 0
+
+        if isinf(tmp):
+            return [1, move]
+    return [0]
+
 def calculateNextMove(grid, depth):
     move = []
 
-    # check for finishing move
-    if False:
-        # handle finishing move
-        pass
+    tmp = check_finishing_move(grid)
+    if tmp[0] == 1:
+        move = tmp[1]
     else:
         bestMove = minimaxSearchAB(depth, grid, True, -1.0, 0)
         if bestMove[1] == None:

@@ -47,8 +47,7 @@ def eval_4_row(nb_open_ends, is_my_turn):
 
 def eval_shape(nb_row, nb_open_ends, is_my_turn):
     if nb_row >= 5:
-        # i won
-        return 100000000000000000
+        return inf
     if nb_open_ends == 0:
         # this shape is useless
         return 0
