@@ -1,8 +1,6 @@
 #!/bin/python
 
 from math import *
-
-from numpy import False_
 from print_grid import *
 from win_condition import print_winner
 from minimax_ab import calculateNextMove
@@ -34,7 +32,7 @@ global ia_move
 
 def ai_play(grid):
     global ia_move
-    move = calculateNextMove(grid, 3)
+    move = calculateNextMove(grid, 4)
     my_print([move[0], move[1]])
     grid[move[0]][move[1]] = -1
     ia_move = move

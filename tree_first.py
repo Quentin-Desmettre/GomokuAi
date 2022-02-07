@@ -1,7 +1,3 @@
-
-# a tree:
-# contains an array of cell
-
 def is_cell_near(grid, i, j):
     l_g = len(grid)
     l_g0 = len(grid[0])

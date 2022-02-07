@@ -1,5 +1,3 @@
-#!/bin/python
-
 def get_player_points(cell, row_1, row_2):
     if cell == 1:
         return (row_1 + 1, 0)

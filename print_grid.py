@@ -1,6 +1,3 @@
-#!/bin/python
-
-from random import *
 import os
 
 def putchr(c):
