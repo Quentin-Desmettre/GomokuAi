@@ -9,7 +9,7 @@ def my_print(move):
 def best_ia_move(grid, is_ia_turn, depth):
     possible_move = possible_moves(grid)
     best_move = [-1, -1]
-    best_scores = [inf, -inf] if is_ia_turn else [-inf, inf]
+    best_scores = [inf, -inf]
     scores = [0, 0]
 
     for move in possible_move:
@@ -23,7 +23,6 @@ def best_ia_move(grid, is_ia_turn, depth):
         else:
             scores = best_ia_move(grid, not is_ia_turn, depth - 1)[2]
 
-
         # unplay the move
         grid[move[0]][move[1]] = 0
 
@@ -31,7 +30,7 @@ def best_ia_move(grid, is_ia_turn, depth):
         # update the highest score:
         #print("is ia turn:", is_ia_turn)
         #print("")
-        if (is_ia_turn and       scores[0] < best_scores[0]) or \
+        if (is_ia_turn and scores[0] < best_scores[0]) or \
            ((not is_ia_turn) and scores[1] > best_scores[1]):
             best_scores = scores
             best_move = move

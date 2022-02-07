@@ -2,7 +2,7 @@ from math import inf
 
 def eval_1_row(nb_open_ends):
     if nb_open_ends == 1:
-        return 0.5
+        return 0.8
     elif nb_open_ends == 2:
         return 1
     else:
@@ -56,7 +56,6 @@ def eval_shape(nb_row, nb_open_ends, is_my_turn):
     if nb_open_ends == 0:
         # this shape is useless
         return 0
-    
     if nb_row == 4:
         return eval_4_row(nb_open_ends, is_my_turn)
     elif nb_row == 3:
