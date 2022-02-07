@@ -5,12 +5,16 @@ def eval_1_row(nb_open_ends):
         return 0.5
     elif nb_open_ends == 2:
         return 1
+    else:
+        return 0
 
 def eval_2_row(nb_open_ends):
     if nb_open_ends == 1:
         return 2
     elif nb_open_ends == 2:
         return 5
+    else:
+        return 0
 
 def eval_3_row(nb_open_ends, is_my_turn):
     if nb_open_ends == 1:
@@ -23,6 +27,8 @@ def eval_3_row(nb_open_ends, is_my_turn):
             return 10000
         else:
             return 50
+    else:
+        return 0
 
 def eval_4_row(nb_open_ends, is_my_turn):
 
@@ -40,11 +46,13 @@ def eval_4_row(nb_open_ends, is_my_turn):
         else:
         # 4 in a row, 2 open end and it's not my turn: i can win
             return 500000
+    else:
+        return 0
 
 def eval_shape(nb_row, nb_open_ends, is_my_turn):
     if nb_row >= 5:
         # i won
-        return inf
+        return 100000000000000000
     if nb_open_ends == 0:
         # this shape is useless
         return 0
@@ -58,3 +66,4 @@ def eval_shape(nb_row, nb_open_ends, is_my_turn):
         return eval_2_row(nb_open_ends)
     else:
         return eval_1_row(nb_open_ends)
+    return 0

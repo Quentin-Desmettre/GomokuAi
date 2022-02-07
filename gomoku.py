@@ -3,7 +3,7 @@
 from math import *
 from print_grid import *
 from win_condition import print_winner
-from tree_first import best_move, possible_moves
+from best_move import best_ia_move
 
 def all_print(arr, turn, tmp):
     print_grid(arr)
@@ -24,7 +24,7 @@ def verify_intput(ltr, nb):
     return 0
 
 def ai_play(grid):
-    move = best_move(grid)
+    move = best_ia_move(grid, True, 2)
     grid[move[0]][move[1]] = -1
     return grid
 
@@ -60,6 +60,5 @@ def main():
         else:
             continue
         turn += 1
-
 
 main()
