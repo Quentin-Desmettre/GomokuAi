@@ -5,11 +5,16 @@ from math import *
 from numpy import False_
 from print_grid import *
 from win_condition import print_winner
-from best_move import best_ia_move, my_print
+from minimax_ab import calculateNextMove
+from best_move import my_print
 
 def all_print(arr, turn, tmp):
+    global ia_move
     print_grid(arr)
     print_winner(arr)
+    if turn % 2 == 0 and turn > 0:
+        print("IA played ", end="")
+        my_print(ia_move)
     if (tmp == turn):
         print("Error retry")
     if turn % 2 == 0:
@@ -25,13 +30,18 @@ def verify_intput(ltr, nb):
         return 1
     return 0
 
+global ia_move 
+
 def ai_play(grid):
-    move = best_ia_move(grid, True, 2)
+    global ia_move
+    move = calculateNextMove(grid, 2)
     my_print([move[0], move[1]])
     grid[move[0]][move[1]] = -1
+    ia_move = move
     return grid
 
 def main():
+    global ia_move
     arr = [[0 for i in range(15)] for j in range(15)]
     get = []
     turn = 0

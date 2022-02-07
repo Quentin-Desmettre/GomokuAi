@@ -34,17 +34,13 @@ def eval_4_row(nb_open_ends, is_my_turn):
 
     if nb_open_ends == 1:
         if is_my_turn:
-            # 4 in a row, 1 open end and it's my turn: i almost won
             return 100000000
         else:
-            # 4 in a row, 1 open end and it's not my turn: opponent will block it
-            return 50
+            return 100
     elif nb_open_ends == 2:
         if is_my_turn:
-        # 4 in a row, 2 open end and it's my turn: i will win
             return 100000000
         else:
-        # 4 in a row, 2 open end and it's not my turn: i can win
             return 500000
     else:
         return 0
