@@ -46,7 +46,7 @@ def ai_play(grid):
     global total_time
 
     total_time = time()
-    move = calculateNextMove(grid, 4)
+    move = calculateNextMove(grid, 3)
     total_time = time() - total_time
 
     grid[move[0]][move[1]] = -1
