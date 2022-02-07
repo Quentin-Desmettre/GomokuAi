@@ -17,9 +17,9 @@ def all_print(arr, turn, tmp):
     return turn
 
 def verify_intput(ltr, nb):
-    if ltr < 0 or ltr > 19:
+    if ltr < 0 or ltr > 14:
         return 1
-    if nb < 0 or nb > 19:
+    if nb < 0 or nb > 14:
         return 1
     return 0
 
@@ -29,7 +29,7 @@ def ai_play(grid):
     return grid
 
 def main():
-    arr = [[0 for i in range(20)] for j in range(20)]
+    arr = [[0 for i in range(15)] for j in range(15)]
     get = []
     turn = 0
     tmp = -1
@@ -48,7 +48,7 @@ def main():
             nb = int(get[1:]) - 1
         except:
             continue
-        if ltr > 20:
+        if ltr > 14:
             ltr -= 32
         if (verify_intput(ltr, nb) == 1):
             continue

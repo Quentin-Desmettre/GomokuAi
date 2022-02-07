@@ -63,7 +63,7 @@ def analyze_grid_for_color(grid, color, is_my_turn):
     score = 0
     analyze_rows(grid, color, is_my_turn, score)
     analyze_columns(grid, color, is_my_turn, score)
-    pass
+    return score
 
 def analyze_ia_pos(grid, is_ia_turn):
     return analyze_grid_for_color(grid, -1, is_ia_turn)
