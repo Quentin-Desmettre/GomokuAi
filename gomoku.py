@@ -3,6 +3,7 @@
 from math import *
 from print_grid import *
 from win_condition import print_winner
+from tree_first import best_move, possible_moves
 
 def all_print(arr, turn, tmp):
     print_grid(arr)
@@ -22,6 +23,11 @@ def verify_intput(ltr, nb):
         return 1
     return 0
 
+def ai_play(grid):
+    move = best_move(grid)
+    grid[move[0]][move[1]] = -1
+    return grid
+
 def main():
     arr = [[0 for i in range(20)] for j in range(20)]
     get = []
@@ -30,6 +36,10 @@ def main():
 
     while True:
         tmp = all_print(arr, turn, tmp)
+        if turn % 2:
+            arr = ai_play(arr)
+            turn += 1
+            continue
         get = (str(input()))
         if len(get) > 3:
             continue
