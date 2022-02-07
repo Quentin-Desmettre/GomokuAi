@@ -18,7 +18,7 @@ def best_ia_move(grid, is_ia_turn, depth):
 
         # get the score associated with the new map
         if depth == 1:
-            #my_print(move)
+            my_print(move)
             scores = analyze_gomoku(grid, is_ia_turn)
         else:
             scores = best_ia_move(grid, not is_ia_turn, depth - 1)[2]
@@ -26,10 +26,10 @@ def best_ia_move(grid, is_ia_turn, depth):
         # unplay the move
         grid[move[0]][move[1]] = 0
 
-        #print("move:", move, "; Score:", score, "is ia:", is_ia_turn)
+        # print("move:", move, "; Score:", score, "is ia:", is_ia_turn)
         # update the highest score:
-        #print("is ia turn:", is_ia_turn)
-        #print("")
+        # print("is ia turn:", is_ia_turn)
+        # print("")
         if (is_ia_turn and scores[0] < best_scores[0]) or \
            ((not is_ia_turn) and scores[1] > best_scores[1]):
             best_scores = scores

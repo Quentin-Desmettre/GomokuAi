@@ -30,11 +30,11 @@ def verify_intput(ltr, nb):
         return 1
     return 0
 
-global ia_move 
+global ia_move
 
 def ai_play(grid):
     global ia_move
-    move = calculateNextMove(grid, 2)
+    move = calculateNextMove(grid, 3)
     my_print([move[0], move[1]])
     grid[move[0]][move[1]] = -1
     ia_move = move
@@ -56,8 +56,8 @@ def main():
         get = (str(input()))
         if len(get) > 3:
             continue
-        ltr = ord(get[0][0]) - 65
         try:
+            ltr = ord(get[0][0]) - 65
             nb = int(get[1:]) - 1
         except:
             continue
