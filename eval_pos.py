@@ -47,11 +47,11 @@ def analyze_columns(grid, color, is_my_turn):
     for i in range(len(grid[0])):
         for j in range(len(grid)):
             # new valid char
-            if grid[i][j] == color:
+            if grid[j][i] == color:
                 consecutive += 1
 
             # empty char
-            elif grid[i][j] == 0:
+            elif grid[j][i] == 0:
                 if consecutive > 0:
                     # empty char and there is multiple valid char before
                     open_ends += 1
@@ -91,12 +91,11 @@ def analyze_gomoku(grid, is_ia_turn):
     # Second: analyze the player position
     player_score = analyze_player_pos(grid, is_ia_turn)
 
-    print("ia score:", ia_score)
-    print("player  :", player_score)
-    print("")
+    #print("ia score:", ia_score)
+    #print("player  :", player_score)
 
+    return [player_score, ia_score]
     # if is ai turn, substract player_score to ia_score
-    return player_score - ia_score
     if is_ia_turn:
         return ia_score - player_score
     # else, substract ia_score to player_score

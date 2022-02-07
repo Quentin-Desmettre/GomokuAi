@@ -5,7 +5,7 @@ from math import *
 from numpy import False_
 from print_grid import *
 from win_condition import print_winner
-from best_move import best_ia_move
+from best_move import best_ia_move, my_print
 
 def all_print(arr, turn, tmp):
     print_grid(arr)
@@ -26,7 +26,8 @@ def verify_intput(ltr, nb):
     return 0
 
 def ai_play(grid):
-    move = best_ia_move(grid, True, 1)
+    move = best_ia_move(grid, True, 2)
+    my_print([move[0], move[1]])
     grid[move[0]][move[1]] = -1
     return grid
 

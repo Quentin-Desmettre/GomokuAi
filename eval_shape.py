@@ -10,7 +10,7 @@ def eval_1_row(nb_open_ends):
 
 def eval_2_row(nb_open_ends):
     if nb_open_ends == 1:
-        return 2
+        return 2.51
     elif nb_open_ends == 2:
         return 5
     else:
