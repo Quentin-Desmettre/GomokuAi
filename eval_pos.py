@@ -1,3 +1,4 @@
+from time import time
 from eval_shape import eval_shape
 
 def end_of_sequence(consecutive, open_ends, is_my_turn):
@@ -26,15 +27,21 @@ def analyze_lines(x, y, score, open_ends, consecutive, grid, is_my_turn, color):
 
 def analyze_rows(grid, color, is_my_turn):
     # analyze rows:
-    consecutive = 0
-    open_ends = 0
-    score = 0
+    consecutive_r = 0
+    open_ends_r = 0
+    score_r = 0
+
+    consecutive_c = 0
+    open_ends_c = 0
+    score_c = 0
 
     for i in range(len(grid)):
         for j in range(len(grid[0])):
-            score, open_ends, consecutive = analyze_lines(i, j, score, open_ends, consecutive, grid, is_my_turn, color)
-        consecutive = 0
-    return score
+            score_r, open_ends_r, consecutive_r = analyze_lines(i, j, score_r, open_ends_r, consecutive_r, grid, is_my_turn, color)
+            score_c, open_ends_c, consecutive_c = analyze_lines(j, i, score_c, open_ends_c, consecutive_c, grid, is_my_turn, color)
+        consecutive_r = 0
+        consecutive_c = 0
+    return score_r + score_c
 
 def analyze_diag_right(grid, color, is_my_turn):
     consecutive_bl = 0
@@ -88,12 +95,25 @@ def analyze_columns(grid, color, is_my_turn):
         consecutive = 0
     return score
 
+estim_time = 0
+
+def print_time():
+    print("here")
+    print(estim_time)
+
+def reset_time():
+    global estim_time
+    estim_time = 0
+
 def analyze_grid_for_color(grid, color, is_my_turn):
+    global estim_time
+    t1 = time()
     score = 0
     score += analyze_rows(grid, color, is_my_turn)
-    score += analyze_columns(grid, color, is_my_turn)
+    #score += analyze_columns(grid, color, is_my_turn)
     score += analyze_diag_right(grid, color, is_my_turn)
     score += analyze_diag_left(grid, color, is_my_turn)
+    estim_time = estim_time + time() - t1
     return score
 
 def analyze_ia_pos(grid, is_ia_turn):

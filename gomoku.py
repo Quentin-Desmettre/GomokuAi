@@ -1,16 +1,28 @@
 #!/bin/python
 
 from math import *
+from time import time
 from print_grid import *
 from win_condition import print_winner
 from minimax_ab import calculateNextMove
 from best_move import my_print
+from eval_pos import print_time, reset_time
+
+ia_move = []
+
+total_time = 0
+
+def print_other_time():
+    print(total_time)
 
 def all_print(arr, turn, tmp):
     global ia_move
     print_grid(arr)
     print_winner(arr)
     if turn % 2 == 0 and turn > 0:
+        print_time()
+        print_other_time()
+        reset_time()
         print("IA played ", end="")
         my_print(ia_move)
     if (tmp == turn):
@@ -28,12 +40,15 @@ def verify_intput(ltr, nb):
         return 1
     return 0
 
-global ia_move
 
 def ai_play(grid):
     global ia_move
+    global total_time
+
+    total_time = time()
     move = calculateNextMove(grid, 4)
-    my_print([move[0], move[1]])
+    total_time = time() - total_time
+
     grid[move[0]][move[1]] = -1
     ia_move = move
     return grid
