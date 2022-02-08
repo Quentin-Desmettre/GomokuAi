@@ -35,7 +35,7 @@ def verify_intput(ltr, nb):
 def ai_play(grid):
     global ia_move
 
-    move = calculateNextMove(grid, 3)
+    move = calculateNextMove(grid, 4)
     grid[move[0]][move[1]] = -1
 
     ia_move = move

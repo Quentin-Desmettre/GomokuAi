@@ -4,7 +4,7 @@ def putchr(c):
     print("%c" %c, end="")
 
 def print_grid(grid):
-    os.system("clear")
+    os.system("cls")
     l = len(grid)
     print("    ", end="")
     for i in range(l):

@@ -74,7 +74,7 @@ int is_column_win(char grid[SIZE][SIZE], int column)
 {
     int row_1 = 0;
     int row_2 = 0;
-    
+
     for (int i = 0; i < SIZE; i++) {
         get_player_points(grid[i][column], row_1, row_2);
         if (row_1 >= 5 || row_2 >= 5)

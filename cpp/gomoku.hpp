@@ -11,4 +11,6 @@ void print_winner(char grid[19][19]);
 unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn);
 int analyze_grid_for_color(char grid[19][19], int color, bool is_my_turn);
 move_list possible_moves(char grid[SIZE][SIZE]);
+void print_grid(char grid[19][19]);
+
 #endif
