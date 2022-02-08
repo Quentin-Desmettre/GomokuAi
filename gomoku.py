@@ -9,11 +9,11 @@ from best_move import my_print
 from eval_pos import print_time, reset_time
 
 ia_move = []
-
 total_time = 0
 
 def print_other_time():
-    print(total_time)
+    pass
+    #print(total_time)
 
 def all_print(arr, turn, tmp):
     global ia_move
@@ -31,6 +31,7 @@ def all_print(arr, turn, tmp):
         print("Player 1\nTurn:", turn + 1)
     else:
         print("Player 2\nTurn:", turn + 1)
+        print("IA is thinking...")
     return turn
 
 def verify_intput(ltr, nb):
@@ -39,7 +40,6 @@ def verify_intput(ltr, nb):
     if nb < 0 or nb > 14:
         return 1
     return 0
-
 
 def ai_play(grid):
     global ia_move
@@ -54,7 +54,6 @@ def ai_play(grid):
     return grid
 
 def main():
-    global ia_move
     arr = [[0 for i in range(15)] for j in range(15)]
     get = []
     turn = 0

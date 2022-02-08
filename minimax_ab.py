@@ -71,14 +71,15 @@ def check_finishing_move(grid):
         tmp = analyze_grid_for_color(grid, -1, True)
         grid[move[0]][move[1]] = 0
 
-        if isinf(tmp):
+        if tmp >= 100000000:
             return [1, move]
 
+    for move in all_moves:
         grid[move[0]][move[1]] = 1
         tmp = analyze_grid_for_color(grid, 1, True)
         grid[move[0]][move[1]] = 0
 
-        if isinf(tmp):
+        if tmp >= 100000000:
             return [1, move]
     return [0]
 
@@ -89,7 +90,7 @@ def calculateNextMove(grid, depth):
     if tmp[0] == 1:
         move = tmp[1]
     else:
-        bestMove = minimaxSearchAB(depth, grid, True, -1.0, 0)
+        bestMove = minimaxSearchAB(depth, grid, True, -1.0, 100000000)
         if bestMove[1] == None:
             move = []
         else :

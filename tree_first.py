@@ -2,12 +2,12 @@ def is_cell_near(grid, i, j):
     l_g = len(grid)
     l_g0 = len(grid[0])
 
-    for k in range(i - 2, i + 3):
+    for k in range(i - 1, i + 2):
         if k < 0:
             continue
         if k >= l_g:
             break
-        for l in range(j - 2, j + 3):
+        for l in range(j - 1, j + 2):
             if l < 0:
                 continue
             if l >= l_g0:
