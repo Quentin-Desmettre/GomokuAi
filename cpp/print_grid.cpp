@@ -12,7 +12,7 @@ void clear() {
 
 void print_grid(char grid[SIZE][SIZE])
 {
-    // clear();
+    clear();
     int l = SIZE;
     std::cout << "   ";
     for (int i = 0; i < l; i++)

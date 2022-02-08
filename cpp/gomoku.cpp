@@ -55,7 +55,8 @@ bool verify_intput(int &ltr, int nb)
 int main(void)
 {
     char grid[SIZE][SIZE];
-    std::string get;
+    char *get = nullptr;
+    size_t s = 0;
     int turn = 0;
     int tmp = -1;
 
@@ -68,11 +69,14 @@ int main(void)
             turn += 1;
             continue;
         }
-        std::cin >> get;
-        if (get.length() > 3 || get.length() < 2)
+        free(get);
+        get = nullptr;
+        if (getline(&get, &s, stdin) < 0)
+            return 0;
+        if (!get || strlen(get) > 4 || strlen(get) < 3)
             continue;
         int ltr = get[0] - 65;
-        int nb = atoi(get.c_str() + 1) - 1;
+        int nb = atoi(get + 1) - 1;
         if (verify_intput(ltr, nb))
             continue;
         if (grid[nb][ltr] == 0) {
