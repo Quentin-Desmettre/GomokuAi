@@ -23,10 +23,10 @@ bool is_cell_near(char grid[SIZE][SIZE], int i, int j)
     return false;
 }
 
-std::vector<std::pair<int, int>> possible_moves(char grid[SIZE][SIZE])
+move_list possible_moves(char grid[SIZE][SIZE])
 {
-    std::vector<std::pair<int, int>> moves;
-    std::pair<int, int> p;
+    move_list moves;
+    move_t p;
 
     for (int i = 0; i < SIZE; i++) {
         p.first = i;

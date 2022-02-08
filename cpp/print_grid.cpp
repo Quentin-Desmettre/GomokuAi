@@ -10,10 +10,10 @@ void clear() {
     std::cout << "\x1B[2J\x1B[H";
 }
 
-void print_grid(char grid[19][19])
+void print_grid(char grid[SIZE][SIZE])
 {
     clear();
-    int l = 19;
+    int l = SIZE;
     std::cout << "    ";
     for (int i; i < l; i++)
         std::cout << 'A' + i;
@@ -21,11 +21,11 @@ void print_grid(char grid[19][19])
     for (int i; i < l; i++)
         std::cout <<"--";
     std::cout << "\n";
-    for (int i; i < 19; i++) {
+    for (int i; i < SIZE; i++) {
         if (i < 9)
             std::cout << " ";
         std::cout << i + 1 << "|";
-        for (int j; j < 19; j++) {
+        for (int j; j < SIZE; j++) {
             if (grid[i][j] == 0)
                 std::cout << '.';
             if (grid[i][j] == -1)

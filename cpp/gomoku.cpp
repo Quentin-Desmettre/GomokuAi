@@ -5,40 +5,31 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <string>
 
-void my_print(/*????????????????*/)
+move_t ia_move;
+
+void ai_play(char grid[SIZE][SIZE])
 {
-    std::cout << "move:" << 'A' /*+ ????????????????*/;
-    std::cout << "move:" << /*????????????????*/ + 1;
-}
+    move_t move;// = calculateNextMove(grid, 3);
 
-
-void ai_play(char grid[19][19])
-{
-    // global ia_move
-    // global total_time
-
-    // total_time = time()
-    int *ia_move;
-    int *move = calculateNextMove(grid, 3);
-    // total_time = time() - total_time
-
-    grid[move[0]][move[1]] = -1;
+    grid[move.first][move.second] = -1;
     ia_move = move;
 }
 
-int all_print(char grid[19][19], int turn, int tmp)
+void print_ia_move(void)
 {
-    // global ia_move
+    std::cout << "IA played " <<
+        'A' + ia_move.first << ia_move.second + 1
+    << std::endl;
+}
+
+int all_print(char grid[SIZE][SIZE], int turn, int tmp)
+{
     print_grid(grid);
     print_winner(grid);
-    if (turn % 2 == 0 && turn > 0) {
-        // print_time();
-        // print_other_time();
-        // reset_time();
-        printf("IA played ");
-        my_print(ia_move);
-    }
+    if (turn % 2 == 0 && turn > 0)
+        print_ia_move();
     if (tmp == turn)
         printf("Error retry\n");
     if (turn % 2 == 0)
@@ -50,26 +41,26 @@ int all_print(char grid[19][19], int turn, int tmp)
     return turn;
 }
 
-int verify_intput(int &ltr, int nb)
+bool verify_intput(int &ltr, int nb)
 {
-    if (ltr > 18)
+    if (ltr > SIZE - 1)
         ltr -= 32;
-    if (ltr < 0 or ltr > 18)
-        return 1;
-    if (nb < 0 or nb > 18)
-        return 1;
-    return 0;
+    if (ltr < 0 or ltr > SIZE - 1)
+        return true;
+    if (nb < 0 or nb > SIZE - 1)
+        return true;
+    return false;
 }
 
 int main(void)
 {
-    char grid[19][19];
-    char *get;
+    char grid[SIZE][SIZE];
+    std::string get;
     int turn = 0;
     int tmp = -1;
 
-    for (int i = 0; i < 19; i++)
-        memset(grid[i], 0, sizeof(char) * 19);
+    for (int i = 0; i < SIZE; i++)
+        memset(grid[i], 0, sizeof(char) * SIZE);
     for (;;) {
         tmp = all_print(grid, turn, tmp);
         if (turn % 2) {
@@ -77,11 +68,12 @@ int main(void)
             turn += 1;
             continue;
         }
-        if (scanf(get) != 3 || strlen(get) > 3)
+        std::cin >> get;
+        if (get.length() > 3 || get.length() < 2)
             continue;
         int ltr = get[0] - 65;
-        int nb = atoi(get + 1) - 1;
-        if (verify_intput(ltr, nb) == 1)
+        int nb = atoi(get.c_str() + 1) - 1;
+        if (verify_intput(ltr, nb))
             continue;
         if (grid[nb][ltr] == 0) {
             if (turn % 2 == 0)

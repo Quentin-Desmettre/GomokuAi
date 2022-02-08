@@ -1,5 +1,4 @@
 #include "gomoku.hpp"
-#include <cstdarg>
 
 typedef struct {
     int consecutive;
@@ -7,12 +6,12 @@ typedef struct {
     int score;
 } row_t;
 
-void analyze_lines(char grid[19][19], int const &x, int const &y,
+void analyze_lines(char grid[SIZE][SIZE], int const &x, int const &y,
 row_t &scores, bool is_my_turn, int color)
 {
-    if (grid[x][y])
+    if (grid[x][y] == color)
         scores.consecutive++;
-    else if (grid[x][y]) {
+    else if (grid[x][y] == 0) {
         if (scores.consecutive > 0) {
             scores.open_ends++;
             scores.score += eval_shape(scores.consecutive, scores.open_ends, is_my_turn);
@@ -31,24 +30,14 @@ row_t &scores, bool is_my_turn, int color)
     }
 }
 
-int sum_rows(row_t n[6])
-{
-    int sc = 0;
-
-    for (int i = 0; i < 6; i++) {
-        sc += n[i].score;
-    }
-    return sc;
-}
-
-int analyze_grid_for_color(char grid[19][19], int color, bool is_my_turn)
+int analyze_grid_for_color(char grid[SIZE][SIZE], int color, bool is_my_turn)
 {
     row_t rows, columns, diag_bl, diag_ur, diag_ul, diag_br;
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             analyze_lines(grid, i, j, rows, is_my_turn, color);
-            analyze_lines(grid, j, i, rows, is_my_turn, color);
+            analyze_lines(grid, j, i, columns, is_my_turn, color);
 
 
             if (j < SIZE - i) {
@@ -63,5 +52,5 @@ int analyze_grid_for_color(char grid[19][19], int color, bool is_my_turn)
             }
         }
     }
-    return sum_rows(row_t[6]{rows, columns, diag_bl, diag_ur, diag_ul, diag_br});
+    return rows.score + columns.score + diag_bl.score + diag_ur.score + diag_ul.score + diag_br.score;
 }

@@ -1,5 +1,7 @@
 #ifndef GOMOKU_H
     #define GOMOKU_H
+    #include <utility>
+    #include <vector>
 
 static const int SIZE = 19;
 
