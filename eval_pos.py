@@ -1,4 +1,3 @@
-from time import time
 from eval_shape import eval_shape
 
 def end_of_sequence(consecutive, open_ends, is_my_turn):
@@ -25,25 +24,18 @@ def analyze_lines(x, y, score, open_ends, consecutive, grid, is_my_turn, color):
             open_ends = 0
     return score, open_ends, consecutive
 
-def analyze_rows(grid, color, is_my_turn):
-    # analyze rows:
+def analyze_grid_for_color(grid, color, is_my_turn):
+    # rows:
     consecutive_r = 0
     open_ends_r = 0
     score_r = 0
 
+    # columns
     consecutive_c = 0
     open_ends_c = 0
     score_c = 0
 
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            score_r, open_ends_r, consecutive_r = analyze_lines(i, j, score_r, open_ends_r, consecutive_r, grid, is_my_turn, color)
-            score_c, open_ends_c, consecutive_c = analyze_lines(j, i, score_c, open_ends_c, consecutive_c, grid, is_my_turn, color)
-        consecutive_r = 0
-        consecutive_c = 0
-    return score_r + score_c
-
-def analyze_diag_right(grid, color, is_my_turn):
+    # diagonals
     consecutive_bl = 0
     score_bl = 0
     nb_ends_bl = 0
@@ -60,76 +52,33 @@ def analyze_diag_right(grid, color, is_my_turn):
     score_br = 0
     nb_ends_br = 0
 
-    for i in range(11):
-        for j in range(len(grid) - i):
-            # bottom left
-            score_bl, nb_ends_bl, consecutive_bl =\
-                analyze_lines(i + j, j, score_bl, nb_ends_bl, consecutive_bl, grid, is_my_turn, color)
-            # up right
-            if j > 0 and i != 10:
-                score_ur, nb_ends_ur, consecutive_ur =\
-                    analyze_lines(j - 1, i + j, score_ur, nb_ends_ur, consecutive_ur, grid, is_my_turn, color)
-            # up left
-            score_ul, nb_ends_ul, consecutive_ul =\
-                analyze_lines(14 - (i + j), j, score_ul, nb_ends_ul, consecutive_ul, grid, is_my_turn, color)
-            # down right
-            if j > 0 and i != 10:
-                score_br, nb_ends_br, consecutive_br =\
-                    analyze_lines(14 - (j - 1), i + j, score_br, nb_ends_br, consecutive_br, grid, is_my_turn, color)
-    return score_ul + score_br + score_ur + score_bl
+    l = len(grid)
+    lg = len(grid[0])
+    for i in range(l):
+        for j in range(lg):
+            score_r, open_ends_r, consecutive_r = analyze_lines(i, j, score_r, open_ends_r, consecutive_r, grid, is_my_turn, color)
+            score_c, open_ends_c, consecutive_c = analyze_lines(j, i, score_c, open_ends_c, consecutive_c, grid, is_my_turn, color)
 
-def analyze_columns(grid, color, is_my_turn):
-    # analyze rows:
-    consecutive = 0
-    open_ends = 0
-    score = 0
+            if j < l - i:
+                # bottom left
+                score_bl, nb_ends_bl, consecutive_bl =\
+                    analyze_lines(i + j, j, score_bl, nb_ends_bl, consecutive_bl, grid, is_my_turn, color)
+                # up right
+                if j > 0 and i != 10:
+                    score_ur, nb_ends_ur, consecutive_ur =\
+                        analyze_lines(j - 1, i + j, score_ur, nb_ends_ur, consecutive_ur, grid, is_my_turn, color)
+                # up left
+                score_ul, nb_ends_ul, consecutive_ul =\
+                    analyze_lines(14 - (i + j), j, score_ul, nb_ends_ul, consecutive_ul, grid, is_my_turn, color)
+                # down right
+                if j > 0 and i != 10:
+                    score_br, nb_ends_br, consecutive_br =\
+                        analyze_lines(14 - (j - 1), i + j, score_br, nb_ends_br, consecutive_br, grid, is_my_turn, color)
 
-    for i in range(len(grid[0])):
-        for j in range(len(grid)):
-            score, open_ends, consecutive = analyze_lines(j, i, score, open_ends, consecutive, grid, is_my_turn, color)
-        consecutive = 0
-    return score
-
-estim_time = 0
-
-def print_time():
-    print("here")
-    print(estim_time)
-
-def reset_time():
-    global estim_time
-    estim_time = 0
-
-def analyze_grid_for_color(grid, color, is_my_turn):
-    global estim_time
-    t1 = time()
-    score = 0
-    score += analyze_rows(grid, color, is_my_turn)
-    score += analyze_diag_right(grid, color, is_my_turn)
-    # score += analyze_diag_left(grid, color, is_my_turn)
-    estim_time = estim_time + time() - t1
-    return score
-
-def analyze_ia_pos(grid, is_ia_turn):
-    return analyze_grid_for_color(grid, -1, is_ia_turn)
-
-def analyze_player_pos(grid, is_ia_turn):
-    return analyze_grid_for_color(grid, 1, is_ia_turn)
-
-def analyze_gomoku(grid, is_ia_turn):
-
-    # First: analyze the ia position
-    ia_score = analyze_ia_pos(grid, is_ia_turn)
-    # Second: analyze the player position
-    player_score = analyze_player_pos(grid, is_ia_turn)
-
-    #print("ia score:", ia_score)
-    #print("player  :", player_score)
-
-    return [player_score, ia_score]
-    # if is ai turn, substract player_score to ia_score
-    if is_ia_turn:
-        return ia_score - player_score
-    # else, substract ia_score to player_score
-    else:
-        return player_score - ia_score
+        consecutive_r = 0
+        consecutive_c = 0
+        consecutive_bl = 0
+        consecutive_ur = 0
+        consecutive_ul = 0
+        consecutive_br = 0
+    return score_r + score_c + score_bl + score_ur + score_ul + score_br
