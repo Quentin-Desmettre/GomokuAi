@@ -11,7 +11,7 @@ move_t ia_move;
 
 void ai_play(char grid[SIZE][SIZE])
 {
-    move_t move;// = calculateNextMove(grid, 3);
+    move_t move = calculateNextMove(grid, 3);
 
     grid[move.first][move.second] = -1;
     ia_move = move;
@@ -20,7 +20,7 @@ void ai_play(char grid[SIZE][SIZE])
 void print_ia_move(void)
 {
     std::cout << "IA played " <<
-        'A' + ia_move.first << ia_move.second + 1
+        char('A' + ia_move.first) << ia_move.second + 1
     << std::endl;
 }
 
