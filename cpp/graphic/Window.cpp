@@ -15,13 +15,14 @@ void init_text(sf::Text &text, sf::Font &font, Window *w, std::string t, sf::Vec
     text.setColor(sf::Color::Black);
     text.setString(t);
     text.setPosition(pos);
-    text.setCharacterSize(w->getSize().y / 20);
+    text.setCharacterSize(w->getSize().y / 15);
+    text.setFillColor(sf::Color::Black);
 }
 
 Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     sf::RenderWindow(mode, name, style),
     m_is_ia_thinking(false),
-    turn(0)
+    turn(1)
 {
     srand(time(NULL));
     for (int i = 0; i < SIZE; i++)
@@ -30,10 +31,10 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
     font.loadFromFile("font.ttf");
 
-    init_text(m_turn, font, this, "", sf::Vector2f());
-    init_text(ai_thinking, font, this, "AI is thinking...");
-    init_text(m_player_1, font, this, "Player 1: ");
-    init_text(m_player_2, font, this, "AI: ");
+    init_text(m_turn, font, this, "", sf::Vector2f(size.x * 0.01, size.y * 0.55));
+    init_text(ai_thinking, font, this, "AI is thinking...", sf::Vector2f(size.x / 2, size.y / 2.5));
+    init_text(m_player_1, font, this, "Player 1: ", sf::Vector2f(size.x * 0.01, size.y * 0.15));
+    init_text(m_player_2, font, this, "AI: ", sf::Vector2f(size.x * 0.01, size.y * 0.35));
 
     sf::Texture *a = new sf::Texture;
     sf::Texture *b = new sf::Texture;
@@ -49,17 +50,30 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
 void Window::draw_ai_thinking()
 {
-    if (m_is_ia_thinking)
+    if (!m_is_ia_thinking)
         draw(ai_thinking);
 }
 
 void Window::draw_texts()
 {
-    m_turn.setString(toString(this->turn));
+    sf::Vector2u size = getSize();
+    const double scale_fac = 1.7;
+
+    m_turn.setString("Turn number " + toString(this->turn));
 
     draw(m_turn);
     draw(m_player_1);
+
+    white_pebble.setPosition(size.x * 0.25, size.y * 0.185);
+    white_pebble.scale(scale_fac, scale_fac);
+    draw(white_pebble);
+    white_pebble.scale(1/scale_fac, 1/scale_fac);
+
     draw(m_player_2);
+    black_pebble.setPosition(size.x * 0.12, size.y * 0.385);
+    black_pebble.scale(scale_fac, scale_fac);
+    draw(black_pebble);
+    black_pebble.scale(1/scale_fac, 1/scale_fac);
 }
 
 Window::~Window()
