@@ -12,7 +12,7 @@ std::string toString(int integer)
 void init_text(sf::Text &text, sf::Font &font, Window *w, std::string t, sf::Vector2f pos = sf::Vector2f(0, 0))
 {
     text.setFont(font);
-    text.setColor(sf::Color::Black);
+    text.setFillColor(sf::Color::Black);
     text.setString(t);
     text.setPosition(pos);
     text.setCharacterSize(w->getSize().y / 15);
@@ -25,6 +25,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     turn(1),
     is_thread(false)
 {
+    victory = 0;
     sf::Vector2u size = getSize();
     m_grid = (char **)malloc(sizeof(char *) * SIZE);
     for (int i = 0; i < SIZE; i++) {
@@ -38,6 +39,11 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     init_text(ai_thinking, font, this, "AI is thinking...", sf::Vector2f(size.x / 2, size.y / 2.5));
     init_text(m_player_1, font, this, "Player 1: ", sf::Vector2f(size.x * 0.01, size.y * 0.15));
     init_text(m_player_2, font, this, "AI: ", sf::Vector2f(size.x * 0.01, size.y * 0.35));
+    init_text(y_lose, font, this, "You Lose !", sf::Vector2f(size.x * 0.01, size.y * 0.75));
+    init_text(y_win, font, this, "You Won !", sf::Vector2f(size.x * 0.01, size.y * 0.75));
+
+    y_win.setFillColor(sf::Color::Red);
+    y_lose.setFillColor(sf::Color::Red);
 
     sf::Texture *a = new sf::Texture;
     sf::Texture *b = new sf::Texture;
@@ -55,6 +61,16 @@ void Window::draw_ai_thinking()
 {
     if (m_is_ia_thinking)
         draw(ai_thinking);
+}
+
+void Window::change_victory(int nb)
+{
+    victory = nb;
+}
+
+int Window::get_victory()
+{
+    return victory;
 }
 
 void Window::draw_texts()
@@ -77,6 +93,10 @@ void Window::draw_texts()
     black_pebble.scale(scale_fac, scale_fac);
     draw(black_pebble);
     black_pebble.scale(1/scale_fac, 1/scale_fac);
+    if (victory == 1)
+        draw(y_win);
+    if (victory == 2)
+        draw(y_lose);
 }
 
 Window::~Window()

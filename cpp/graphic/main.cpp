@@ -13,9 +13,10 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     float spacing = size.y / 22;
     int x = int(round((ev.mouseButton.x - decal - spacing) / spacing));
     int y = int(round((ev.mouseButton.y - spacing * 2) / spacing));
-    if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0)
+    if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0 || window.get_victory() != 0)
         return;
     window[x][y] = 1;
+    print_winner(window);
     window.set_is_ia_thinking(true);
     window.is_thread = false;
 }
@@ -61,6 +62,7 @@ int main(void)
         if (window.get_is_ia_thinking() && !window.is_thread) {
             window.is_thread = true;
             play_ai(window);
+            print_winner(window);
             while (window.pollEvent(ev))
                 if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
                     window.close();

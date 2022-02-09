@@ -9,7 +9,8 @@ private:
     bool m_is_ia_thinking;
     char **m_grid;
     int turn;
-    sf::Text m_turn, m_player_1, m_player_2, ai_thinking;
+    int victory;
+    sf::Text m_turn, m_player_1, m_player_2, ai_thinking, y_lose, y_win;
     sf::Font font;
 
 public:
@@ -28,6 +29,9 @@ public:
 
     void draw_texts();
     void draw_ai_thinking();
+    void change_victory(int nb);
+    int get_victory();
 };
 
 void draw_grid(Window &window);
+void print_winner(Window &window);

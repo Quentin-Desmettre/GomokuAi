@@ -1,4 +1,5 @@
 #include "gomoku.hpp"
+#include "Window.hpp"
 
 void get_player_points(char cell_type, int &row_1, int &row_2)
 {
@@ -102,15 +103,14 @@ int who_won(char **grid)
     return 0;
 }
 
-void print_winner(char **grid)
+void print_winner(Window &window)
 {
-    int w = who_won(grid);
+    int w = who_won(window.get_grid());
 
     if (w == 1)
-        std::cout << "Player 1 won !\n";
+        window.change_victory(1);
     else if (w == -1)
-        std::cout << "Player 2 won !\n";
+        window.change_victory(2);
     else
         return;
-    exit(0);
 }
