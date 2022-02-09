@@ -4,6 +4,12 @@
 
 void manage_mouse_release(sf::Event &ev)
 {
+    /*
+        if (is_on_grid(ev))
+            play_move(ev);
+            window.set_ai_thinking(true);
+        
+    */
 }
 
 void poll_window_events(Window &window)
@@ -21,10 +27,14 @@ void poll_window_events(Window &window)
 void draw_window(Window &window)
 {
     window.clear(sf::Color::White);
+    // Draw which player turn, players name and objects
+    window.draw_texts();
+
     // Draw grid
-    // Draw players name and objects
-    // Draw which player turn
-    // If is ai, draw
+    // Draw pebbles
+
+    // If is ai playing, draw a text
+    window.draw_ai_thinking();
     window.display();
 }
 
@@ -35,5 +45,9 @@ int main(void)
     while (window.isOpen()) {
         poll_window_events(window);
         draw_window(window);
+        if (window.get_is_ia_thinking()) {
+            // play_ai(window);
+            window.set_is_ia_thinking(false);
+        }
     }
 }

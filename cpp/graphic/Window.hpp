@@ -8,6 +8,8 @@ class Window : public sf::RenderWindow
 private:
     bool m_is_ia_thinking;
     char m_grid[SIZE][SIZE];
+    int turn;
+    sf::Text m_turn, m_player_1, m_player_2, ai_thinking;
 
 public:
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
@@ -17,4 +19,8 @@ public:
     bool get_is_ia_thinking(void) {return m_is_ia_thinking;}
 
     char *operator[](int const& i) {return m_grid[i];}
+    bool set_is_ia_thinking(bool new_val) {m_is_ia_thinking = new_val;}
+
+    void draw_texts();
+    void draw_ai_thinking();
 };
