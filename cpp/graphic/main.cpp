@@ -5,6 +5,8 @@
 
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
+    if (window.get_is_ia_thinking())
+        return;
     sf::Vector2u size = window.getSize();
     float decal = (size.x - size.y) / 1.2;
     float spacing = size.y / 22;
