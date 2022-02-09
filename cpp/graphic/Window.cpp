@@ -4,9 +4,18 @@
 
 std::string toString(int integer)
 {
-    char numstr[10]; // enough to hold all numbers up to 32-bits
+    char numstr[10];
     sprintf(numstr, "%i", integer);
     return numstr;
+}
+
+void init_text(sf::Text &text, sf::Font &font, Window *w, std::string t, sf::Vector2f pos = sf::Vector2f(0, 0))
+{
+    text.setFont(font);
+    text.setColor(sf::Color::Black);
+    text.setString(t);
+    text.setPosition(pos);
+    text.setCharacterSize(w->getSize().y / 20);
 }
 
 Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
@@ -18,20 +27,12 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
         memset(m_grid[i], 0, sizeof(char) * SIZE);
     sf::Vector2u size = getSize();
 
-    sf::Font *font = new sf::Font;
-    font->loadFromFile("font.ttf");
+    font.loadFromFile("font.ttf");
 
-    m_turn.setFont(*font);
-    ai_thinking.setFont(*font);
-    m_player_1.setFont(*font);
-    m_player_2.setFont(*font);
-
-    m_turn.setPosition(sf::Vector2f(100, 100));
-    
-    m_turn.setCharacterSize(30);
-    ai_thinking.setCharacterSize(size.y / 20);
-    m_player_1.setCharacterSize(size.y / 20);
-    m_player_2.setCharacterSize(size.y / 20);
+    init_text(m_turn, font, this, "", sf::Vector2f());
+    init_text(ai_thinking, font, this, "AI is thinking...");
+    init_text(m_player_1, font, this, "Player 1: ");
+    init_text(m_player_2, font, this, "AI: ");
 }
 
 void Window::draw_ai_thinking()

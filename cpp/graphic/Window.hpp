@@ -10,6 +10,7 @@ private:
     char m_grid[SIZE][SIZE];
     int turn;
     sf::Text m_turn, m_player_1, m_player_2, ai_thinking;
+    sf::Font font;
 
 public:
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
