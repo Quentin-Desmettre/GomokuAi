@@ -2,11 +2,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-void manage_mouse_release(sf::Event &ev)
+void manage_mouse_release(sf::Event &ev, Window &window)
 {
     /*
-        if (is_on_grid(ev))
-            play_move(ev);
+        if (is_on_grid(ev, window))
+            play_move(ev, window);
             window.set_ai_thinking(true);
         
     */
@@ -20,7 +20,7 @@ void poll_window_events(Window &window)
         if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
             window.close();
         if (ev.type == sf::Event::MouseButtonReleased)
-            manage_mouse_release(ev);
+            manage_mouse_release(ev, window);
     }
 }
 
