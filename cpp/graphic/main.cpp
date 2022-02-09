@@ -32,7 +32,7 @@ void poll_window_events(Window &window)
 
 void draw_window(Window &window)
 {
-    window.clear(sf::Color::White);
+    window.clear(sf::Color(246,230,189, 255));
     // Draw which player turn, players name and objects
     window.draw_texts();
 
