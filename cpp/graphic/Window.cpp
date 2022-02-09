@@ -24,6 +24,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     m_is_ia_thinking(false),
     turn(1)
 {
+    sf::Vector2u size = getSize();
     for (int i = 0; i < SIZE; i++)
         memset(m_grid[i], 0, sizeof(char) * SIZE);
 
