@@ -26,8 +26,11 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     is_thread(false)
 {
     sf::Vector2u size = getSize();
-    for (int i = 0; i < SIZE; i++)
+    m_grid = (char **)malloc(sizeof(char *) * SIZE);
+    for (int i = 0; i < SIZE; i++) {
+        m_grid[i] = (char *)malloc(sizeof(char) * SIZE);
         memset(m_grid[i], 0, sizeof(char) * SIZE);
+    }
 
     font.loadFromFile("font.ttf");
 
@@ -50,7 +53,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
 void Window::draw_ai_thinking()
 {
-    if (!m_is_ia_thinking)
+    if (m_is_ia_thinking)
         draw(ai_thinking);
 }
 

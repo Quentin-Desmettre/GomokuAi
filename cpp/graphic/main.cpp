@@ -4,6 +4,8 @@
 #include <math.h>
 #include <thread>
 
+void play_ai(Window &window);
+
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
     sf::Vector2u size = window.getSize();
@@ -14,6 +16,8 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0)
         return;
     window[x][y] = 1;
+    window.set_is_ia_thinking(true);
+    window.is_thread = false;
 }
 
 void poll_window_events(Window &window)
@@ -55,7 +59,8 @@ int main(void)
         poll_window_events(window);
         draw_window(window);
         if (window.get_is_ia_thinking() && !window.is_thread) {
-            //play_ai(window.get_grid());
+            window.is_thread = true;
+            play_ai(window);
             while (window.pollEvent(ev))
                 if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
                     window.close();

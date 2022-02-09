@@ -7,7 +7,7 @@ class Window : public sf::RenderWindow
 {
 private:
     bool m_is_ia_thinking;
-    char m_grid[SIZE][SIZE];
+    char **m_grid;
     int turn;
     sf::Text m_turn, m_player_1, m_player_2, ai_thinking;
     sf::Font font;
