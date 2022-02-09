@@ -13,6 +13,7 @@ private:
     sf::Font font;
 
 public:
+    bool is_thread;
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
     ~Window();
 

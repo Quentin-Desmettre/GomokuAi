@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <thread>
 
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
@@ -27,7 +28,7 @@ void poll_window_events(Window &window)
     while (window.pollEvent(ev)) {
         if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
             window.close();
-        if (ev.type == sf::Event::MouseButtonReleased)
+        if (ev.type == sf::Event::MouseButtonReleased && !window.get_is_ia_thinking())
             manage_mouse_release(ev, window);
     }
 }
@@ -52,12 +53,17 @@ void draw_window(Window &window)
 int main(void)
 {
     Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
+    sf::Event ev;
 
     while (window.isOpen()) {
         poll_window_events(window);
         draw_window(window);
-        if (window.get_is_ia_thinking()) {
+        if (window.get_is_ia_thinking() && !window.is_thread) {
             //play_ai(window.get_grid());
+            while (window.pollEvent(ev))
+                if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
+                    window.close();
+            window.is_thread = false;
             window.set_is_ia_thinking(false);
         }
     }

@@ -22,7 +22,8 @@ void init_text(sf::Text &text, sf::Font &font, Window *w, std::string t, sf::Vec
 Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     sf::RenderWindow(mode, name, style),
     m_is_ia_thinking(false),
-    turn(1)
+    turn(1),
+    is_thread(false)
 {
     sf::Vector2u size = getSize();
     for (int i = 0; i < SIZE; i++)
