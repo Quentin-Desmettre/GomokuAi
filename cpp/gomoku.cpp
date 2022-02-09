@@ -1,17 +1,10 @@
 #include "gomoku.hpp"
-#include <stdio.h>
-#include <string.h>
-#include <cstdlib>
-#include <utility>
-#include <vector>
-#include <iostream>
-#include <string>
 
 move_t ia_move;
 
 void ai_play(char grid[SIZE][SIZE])
 {
-    move_t move = calculateNextMove(grid, 3);
+    move_t move = calculateNextMove(grid, 4);
 
     grid[move.first][move.second] = -1;
     ia_move = move;

@@ -2,7 +2,11 @@
     #define GOMOKU_H
     #include <utility>
     #include <vector>
-
+    #include <cstdarg>
+    #include <cstring>
+    #include <cstdio>
+    #include <cstdlib>
+    #include <iostream>
 static const int SIZE = 19;
 
 typedef std::pair<int, int> move_t;

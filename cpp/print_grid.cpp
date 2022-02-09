@@ -1,13 +1,8 @@
 #include "gomoku.hpp"
-#include <stdio.h>
-#include <string.h>
-#include <cstdlib>
-#include <iostream>
-#include <utility>
 
 void clear() {
     // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
-    std::cout << "\x1B[2J\x1B[H";
+    system("clear");
 }
 
 void print_grid(char grid[SIZE][SIZE])

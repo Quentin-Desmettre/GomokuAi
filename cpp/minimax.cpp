@@ -1,7 +1,4 @@
 #include "gomoku.hpp"
-#include <utility>
-#include <vector>
-#include <array>
 
 typedef std::pair<double, move_t> best_move_t;
 
@@ -12,7 +9,7 @@ double analyze_ia_pos(char grid[SIZE][SIZE], bool is_ia_turn)
 
     if (player_score == 0)
         player_score = 1;
-    return float(ia_score) / player_score;
+    return double(ia_score) / player_score;
 }
 
 move_t check_finishing_move(char grid[SIZE][SIZE])

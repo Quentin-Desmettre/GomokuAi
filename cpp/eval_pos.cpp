@@ -30,10 +30,26 @@ row_t &scores, bool is_my_turn, int color)
     }
 }
 
+void init_rows(int nb, ...)
+{
+    va_list va;
+    row_t *t;
+
+    va_start(va, nb);
+    for (int i = 0; i < nb; i++) {
+        t = va_arg(va, row_t *);
+        t->score = 0;
+        t->open_ends = 0;
+        t->consecutive = 0;
+    }
+    va_end(va);
+}
+
 int analyze_grid_for_color(char grid[SIZE][SIZE], int color, bool is_my_turn)
 {
     row_t rows, columns, diag_bl, diag_ur, diag_ul, diag_br;
 
+    init_rows(6, &rows, &columns, &diag_bl, &diag_ur, &diag_ul, &diag_br);
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             analyze_lines(grid, i, j, rows, is_my_turn, color);

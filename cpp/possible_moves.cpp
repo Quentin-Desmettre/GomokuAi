@@ -1,6 +1,4 @@
 #include "gomoku.hpp"
-#include <vector>
-#include <utility>
 
 bool is_cell_near(char grid[SIZE][SIZE], int i, int j)
 {

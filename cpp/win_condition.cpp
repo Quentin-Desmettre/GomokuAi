@@ -1,5 +1,3 @@
-#include <utility>
-#include <iostream>
 #include "gomoku.hpp"
 
 void get_player_points(char cell_type, int &row_1, int &row_2)
