@@ -15,6 +15,9 @@ public:
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
     ~Window();
 
+    sf::Sprite white_pebble;
+    sf::Sprite black_pebble;
+
     char **get_grid(void) {return (char **)m_grid;}
     bool get_is_ia_thinking(void) {return m_is_ia_thinking;}
 

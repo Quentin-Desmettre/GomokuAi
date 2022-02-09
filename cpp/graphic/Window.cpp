@@ -14,8 +14,9 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     m_is_ia_thinking(false),
     turn(0)
 {
+    srand(time(NULL));
     for (int i = 0; i < SIZE; i++)
-        memset(m_grid[i], 0, sizeof(char) * SIZE);
+        memset(m_grid[i], rand() % 3 - 1, sizeof(char) * SIZE);
     sf::Vector2u size = getSize();
 
     sf::Font *font = new sf::Font;
@@ -27,11 +28,22 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     m_player_2.setFont(*font);
 
     m_turn.setPosition(sf::Vector2f(100, 100));
-    
+
     m_turn.setCharacterSize(30);
     ai_thinking.setCharacterSize(size.y / 20);
     m_player_1.setCharacterSize(size.y / 20);
     m_player_2.setCharacterSize(size.y / 20);
+
+    sf::Texture *a = new sf::Texture;
+    sf::Texture *b = new sf::Texture;
+    a->loadFromFile("img/white.png");
+    white_pebble.setOrigin(sf::Vector2f(128, 128));
+    white_pebble.setTexture(*a);
+    white_pebble.setScale(sf::Vector2f(0.19, 0.19));
+    b->loadFromFile("img/black.png");
+    black_pebble.setOrigin(sf::Vector2f(128, 128));
+    black_pebble.setScale(sf::Vector2f(0.19, 0.19));
+    black_pebble.setTexture(*b);
 }
 
 void Window::draw_ai_thinking()
