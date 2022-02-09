@@ -24,14 +24,6 @@ move_t check_finishing_move(char **grid)
         if (tmp >= 100000000)
             return move;
     }
-    for (move_t move : all_moves) {
-        grid[move.first][move.second] = 1;
-        double tmp = analyze_grid_for_color(grid, 1, true);
-        grid[move.first][move.second] = 0;
-
-        if (tmp >= 100000000)
-            return move;
-    }
     return move_t(-1, -1);
 }
 
@@ -89,6 +81,11 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
 
 move_t calculateNextMove(char **grid, int depth)
 {
+    move_t finish = check_finishing_move(grid);
+
+    if (finish.first >= 0 && finish.second >= 0)
+        return finish;
+
     best_move_t bestMove = minimaxSearchAB(depth, grid, true, -1.0, 100000000);
 
     return (bestMove.second.first < 0) ? move_t(0, 0) : bestMove.second;
