@@ -31,10 +31,14 @@ void draw_window(Window &window)
     window.draw_texts();
 
     // Draw grid
+    draw_grid(window);
     // Draw pebbles
 
     // If is ai playing, draw a text
     window.draw_ai_thinking();
+    // Draw players name and objects
+    // Draw which player turn
+    // If is ai, draw
     window.display();
 }
 

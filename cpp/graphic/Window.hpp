@@ -24,3 +24,5 @@ public:
     void draw_texts();
     void draw_ai_thinking();
 };
+
+void draw_grid(Window &window);
