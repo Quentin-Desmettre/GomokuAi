@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <string>
 #include "gomoku.hpp"
 
@@ -11,4 +12,9 @@ private:
 public:
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
     ~Window();
+
+    char **get_grid(void) {return (char **)m_grid;}
+    bool get_is_ia_thinking(void) {return m_is_ia_thinking;}
+
+    char *operator[](int const& i) {return m_grid[i];}
 };
