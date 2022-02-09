@@ -18,3 +18,5 @@ public:
 
     char *operator[](int const& i) {return m_grid[i];}
 };
+
+void draw_grid(Window &window);

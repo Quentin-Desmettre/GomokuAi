@@ -21,7 +21,7 @@ void poll_window_events(Window &window)
 void draw_window(Window &window)
 {
     window.clear(sf::Color::White);
-    // Draw grid
+    draw_grid(window);
     // Draw players name and objects
     // Draw which player turn
     // If is ai, draw
