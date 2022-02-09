@@ -1,4 +1,3 @@
-from math import isinf
 from tree_first import possible_moves
 from math import inf
 from eval_pos import analyze_grid_for_color
@@ -86,13 +85,9 @@ def check_finishing_move(grid):
 def calculateNextMove(grid, depth):
     move = []
 
-    tmp = check_finishing_move(grid)
-    if tmp[0] == 1:
-        move = tmp[1]
-    else:
-        bestMove = minimaxSearchAB(depth, grid, True, -1.0, 100000000)
-        if bestMove[1] == None:
-            move = []
-        else :
-            move = [bestMove[1], bestMove[2]]
+    bestMove = minimaxSearchAB(depth, grid, True, -1.0, 100000000)
+    if bestMove[1] == None:
+        move = []
+    else :
+        move = [bestMove[1], bestMove[2]]
     return move
