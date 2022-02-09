@@ -5,8 +5,6 @@
 
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
-    if (window.get_is_ia_thinking())
-        return;
     sf::Vector2u size = window.getSize();
     float decal = (size.x - size.y) / 1.2;
     float spacing = size.y / 22;
@@ -14,10 +12,7 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     int y = int(round((ev.mouseButton.y - spacing * 2) / spacing));
     if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0)
         return;
-    if (window[x][y] == 0) {
-        window[x][y] = 1;
-        window.set_is_ia_thinking(true);
-    }
+    window[x][y] = 1;
 }
 
 void poll_window_events(Window &window)
@@ -38,8 +33,9 @@ void draw_window(Window &window)
     // Draw which player turn, players name and objects
     window.draw_texts();
 
-    // Draw grid and pebbles
+    // Draw grid
     draw_grid(window);
+    // Draw pebbles
 
     // If is ai playing, draw a text
     window.draw_ai_thinking();
@@ -57,7 +53,7 @@ int main(void)
         poll_window_events(window);
         draw_window(window);
         if (window.get_is_ia_thinking()) {
-            //play_ai(window.get_grid());
+            // play_ai(window);
             window.set_is_ia_thinking(false);
         }
     }
