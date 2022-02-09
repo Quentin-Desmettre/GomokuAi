@@ -21,6 +21,18 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     window.is_thread = false;
 }
 
+void reset_window(Window &win)
+{
+    char **grid = win.get_grid();
+
+    win.set_is_ia_thinking(false);
+    win.is_thread = false;
+    win.set_turn(1);
+    win.change_victory(0);
+    for (int i = 0; i < SIZE; i++)
+        memset(grid[i], 0, sizeof(char) * SIZE);
+}
+
 void poll_window_events(Window &window)
 {
     sf::Event ev;
@@ -30,6 +42,8 @@ void poll_window_events(Window &window)
             window.close();
         if (ev.type == sf::Event::MouseButtonReleased && !window.get_is_ia_thinking())
             manage_mouse_release(ev, window);
+        if (window.get_victory() && ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Enter)
+            reset_window(window);
     }
 }
 
@@ -68,6 +82,7 @@ int main(void)
                     window.close();
             window.is_thread = false;
             window.set_is_ia_thinking(false);
+            window.set_turn(window.get_turn() + 1);
         }
     }
 }

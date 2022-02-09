@@ -12,6 +12,7 @@ private:
     int victory;
     sf::Text m_turn, m_player_1, m_player_2, ai_thinking, y_lose, y_win;
     sf::Font font;
+    sf::Text m_new_round;
 
 public:
     bool is_thread;
@@ -31,6 +32,8 @@ public:
     void draw_ai_thinking();
     void change_victory(int nb);
     int get_victory();
+    void set_turn(int nb) {turn = nb;}
+    int get_turn(void) {return turn;}
 };
 
 void draw_grid(Window &window);

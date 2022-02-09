@@ -35,6 +35,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
     font.loadFromFile("font.ttf");
 
+    init_text(m_new_round, font, this, "ENTER to retry", sf::Vector2f(size.x * 0.01, size.y * 0.85));
     init_text(m_turn, font, this, "", sf::Vector2f(size.x * 0.01, size.y * 0.55));
     init_text(ai_thinking, font, this, "AI is thinking...", sf::Vector2f(size.x / 2, size.y / 2.5));
     init_text(m_player_1, font, this, "Player 1: ", sf::Vector2f(size.x * 0.01, size.y * 0.15));
@@ -97,6 +98,8 @@ void Window::draw_texts()
         draw(y_win);
     if (victory == 2)
         draw(y_lose);
+    if (victory)
+        draw(m_new_round);
 }
 
 Window::~Window()
