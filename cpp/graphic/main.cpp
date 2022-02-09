@@ -12,7 +12,10 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     int y = int(round((ev.mouseButton.y - spacing * 2) / spacing));
     if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0)
         return;
-    window[x][y] = 1;
+    if (window[x][y] == 0) {
+        window[x][y] = 1;
+        window.set_is_ia_thinking(true);
+    }
 }
 
 void poll_window_events(Window &window)
@@ -33,9 +36,8 @@ void draw_window(Window &window)
     // Draw which player turn, players name and objects
     window.draw_texts();
 
-    // Draw grid
+    // Draw grid and pebbles
     draw_grid(window);
-    // Draw pebbles
 
     // If is ai playing, draw a text
     window.draw_ai_thinking();
@@ -53,7 +55,7 @@ int main(void)
         poll_window_events(window);
         draw_window(window);
         if (window.get_is_ia_thinking()) {
-            // play_ai(window);
+            play_ai(window.get_grid());
             window.set_is_ia_thinking(false);
         }
     }

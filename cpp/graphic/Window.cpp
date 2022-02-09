@@ -49,7 +49,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
 void Window::draw_ai_thinking()
 {
-    if (!m_is_ia_thinking)
+    if (m_is_ia_thinking)
         draw(ai_thinking);
 }
 
