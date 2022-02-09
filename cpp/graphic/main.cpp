@@ -55,7 +55,7 @@ int main(void)
         poll_window_events(window);
         draw_window(window);
         if (window.get_is_ia_thinking()) {
-            play_ai(window.get_grid());
+            //play_ai(window.get_grid());
             window.set_is_ia_thinking(false);
         }
     }
