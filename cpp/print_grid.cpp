@@ -1,7 +1,7 @@
 #include "gomoku.hpp"
 
-void clear() {
-    // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
+void clear()
+{
     system("clear");
 }
 

@@ -27,6 +27,6 @@ unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn)
     case 1:
         return 1;
     default:
-        return WIN_GUARANTEE * (4 - count);
+        return WIN_GUARANTEE * 2;
     }
 }

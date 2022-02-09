@@ -4,7 +4,7 @@ typedef std::pair<double, move_t> best_move_t;
 
 double analyze_ia_pos(char grid[SIZE][SIZE], bool is_ia_turn)
 {
-    int ia_score = analyze_grid_for_color(grid, -1, is_ia_turn);
+    int ia_score = analyze_grid_for_color(grid, -1, !is_ia_turn);
     int player_score = analyze_grid_for_color(grid, 1, is_ia_turn);
 
     if (player_score == 0)
