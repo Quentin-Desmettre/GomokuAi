@@ -1,15 +1,18 @@
 #include "Window.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <math.h>
 
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
-    /*
-        if (is_on_grid(ev, window))
-            play_move(ev, window);
-            window.set_ai_thinking(true);
-        
-    */
+    sf::Vector2u size = window.getSize();
+    float decal = (size.x - size.y) / 1.3;
+    float spacing = size.y / 22;
+    int x = int(round((ev.mouseButton.x - decal - spacing) / spacing));
+    int y = int(round((ev.mouseButton.y - spacing * 2) / spacing));
+    if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0)
+        return;
+    window[x][y] = 1;
 }
 
 void poll_window_events(Window &window)

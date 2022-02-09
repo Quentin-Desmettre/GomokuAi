@@ -21,7 +21,7 @@ void draw_pebble(Window &window, float decal, float spacing)
 void draw_grid(Window &window)
 {
     sf::Vector2u size = window.getSize();
-    float decal = (size.x - size.y) / 2;
+    float decal = (size.x - size.y) / 1.3;
     float spacing = size.y / 22;
     sf::RectangleShape rectangle_h(sf::Vector2f(size.y - spacing * 2 + 2, 4));
     sf::RectangleShape rectangle_v(sf::Vector2f(4, size.y - spacing * 2));
