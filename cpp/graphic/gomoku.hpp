@@ -7,6 +7,8 @@
     #include <cstdio>
     #include <cstdlib>
     #include <iostream>
+    #define WIN_SCORE 100000000
+    #define WIN_GUARANTEE 1000000
 
 static const int SIZE = 19;
 

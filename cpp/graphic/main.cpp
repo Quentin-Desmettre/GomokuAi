@@ -114,6 +114,12 @@ void game_loop(Window &window, bool *gen = nullptr, int *i = nullptr, bool *turn
 
 void gen_move(Window &window, bool &gen, bool &turn)
 {
+    // window[9][9] = 1;
+    // window.moves.push_back(move_t(9, 9));
+    // gen = false;
+    // window.is_pause = true;
+    // turn = true;
+    // return;
     move_t m(rand() % SIZE, rand() % SIZE);
     window.moves.push_back(m);
     window[m.first][m.second] = 1;

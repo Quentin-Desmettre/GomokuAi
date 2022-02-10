@@ -1,5 +1,4 @@
-#define WIN_GUARANTEE 1000000
-#define WIN_SCORE 100000000
+#include "gomoku.hpp"
 
 unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn)
 {
