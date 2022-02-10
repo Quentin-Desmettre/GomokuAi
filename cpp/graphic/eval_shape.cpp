@@ -8,7 +8,10 @@ unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn)
 
     switch (count) {
     case 5:
-        return WIN_SCORE;
+        if (currentTurn)
+            return WIN_SCORE;
+        else
+            return WIN_SCORE;
     case 4:
         if (currentTurn)
             return WIN_GUARANTEE;

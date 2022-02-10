@@ -119,7 +119,7 @@ void gen_move(Window &window, bool &gen, bool &turn)
     window[m.first][m.second] = 1;
     gen = false;
     window.is_pause = true;
-    turn = true;   
+    turn = true;
 }
 
 void ai_vs_ai(Window &window)
@@ -172,6 +172,7 @@ void pvp_mode(Window &window)
 int main(int ac, char **av)
 {
     Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
+    window.setFramerateLimit(24);
 
     if (ac > 1 && av[1] == std::string("spectator"))
         ai_vs_ai(window);
