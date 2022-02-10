@@ -5,7 +5,7 @@
 #include <thread>
 #include <unistd.h>
 
-void manage_mouse_release(sf::Event &ev, Window &window)
+void manage_mouse_release(sf::Event &ev, Window &window, bool *turn)
 {
     sf::Vector2u size = window.getSize();
     float decal = (size.x - size.y) / 1.2;
@@ -14,12 +14,17 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     int y = int(round((ev.mouseButton.y - spacing * 2) / spacing));
     if (x < 0 || y < 0 || x > 18 || y > 18 || window[x][y] != 0 || window.get_victory() != 0)
         return;
-    window[x][y] = 1;
+    if (turn) {
+        window[x][y] = *turn ? 1 : -1;
+        *turn = !(*turn);
+        window.set_turn(window.get_turn() + *turn);
+    } else
+        window[x][y] = 1;
     print_winner(window);
-    window.set_is_ia_thinking(true);
+    window.set_is_ia_thinking(turn ? false : true);
 }
 
-void reset_window(Window &win, bool *gen, int *z)
+void reset_window(Window &win, bool *gen, int *z, bool *turn)
 {
     char **grid = win.get_grid();
 
@@ -30,6 +35,8 @@ void reset_window(Window &win, bool *gen, int *z)
         *gen = true;
     if (z)
         *z = 0;
+    if (turn)
+        *turn = true;
     for (int i = 0; i < SIZE; i++)
         memset(grid[i], 0, sizeof(char) * SIZE);
 }
@@ -68,9 +75,9 @@ void poll_window_events(Window &window, bool *gen, int *i, bool *turn)
         if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
             window.close();
         if (!window.mode && ev.type == sf::Event::MouseButtonReleased && !window.get_is_ia_thinking())
-            manage_mouse_release(ev, window);
+            manage_mouse_release(ev, window, turn);
         if (window.get_victory() && ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Enter)
-            reset_window(window, gen, i);
+            reset_window(window, gen, i, turn);
         if (window.mode)
             manage_direction(window, ev, i, turn, gen);
     }
@@ -151,12 +158,25 @@ void player_vs_ai(Window &window)
     }
 }
 
+void pvp_mode(Window &window)
+{
+    bool turn = true;
+
+    for (int i = 0; window.isOpen(); i++) {
+        game_loop(window, nullptr, nullptr, &turn);
+        if (window.get_victory())
+            continue;
+    }
+}
+
 int main(int ac, char **av)
 {
     Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
 
-    if (ac > 1 && av[1] == std::string("spectator_mode"))
+    if (ac > 1 && av[1] == std::string("spectator"))
         ai_vs_ai(window);
+    else if (ac > 1 && av[1] == std::string("2player"))
+        pvp_mode(window);
     else
         player_vs_ai(window);
     return 0;

@@ -10,7 +10,7 @@ private:
     char **m_grid;
     int turn;
     int victory;
-    sf::Text m_turn, m_player_1, m_player_2, ai_thinking, y_lose, y_win;
+    sf::Text m_turn, m_player_1, ai_thinking, y_lose, y_win;
     sf::Font font;
     sf::Text m_new_round;
 
@@ -21,6 +21,7 @@ public:
     sf::Sprite white_pebble;
     sf::Sprite black_pebble;
     move_list moves;
+    sf::Text m_player_2;
 
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
     ~Window();
