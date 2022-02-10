@@ -9,16 +9,19 @@ double analyze_ia_pos(char **grid, bool is_ia_turn)
 
     if (player_score == 0)
         player_score = 1;
+    if (is_ia_turn)
+        player_score *= 2;
     return double(ia_score) / player_score;
 }
 
-move_t check_finishing_move(char **grid)
+move_t check_finishing_move(char **grid, bool is_ia)
 {
     move_list all_moves = possible_moves(grid);
+    int color = is_ia ? -1 : 1;
 
     for (move_t move : all_moves) {
-        grid[move.first][move.second] = -1;
-        double tmp = analyze_grid_for_color(grid, -1, true);
+        grid[move.first][move.second] = color;
+        double tmp = analyze_grid_for_color(grid, color, true);
         grid[move.first][move.second] = 0;
 
         if (tmp >= 100000000)
@@ -46,10 +49,10 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
             best_move_t tmpMove = minimaxSearchAB(depth - 1, grid, false, alpha, beta);
             grid[move.first][move.second] = 0;
 
-            if (tmpMove.first > alpha)
-                alpha = tmpMove.first;
             if (tmpMove.first >= beta)
                 return tmpMove;
+            if (tmpMove.first > alpha)
+                alpha = tmpMove.first;
             
             if (tmpMove.first > bestMove.first) {
                 bestMove.first = tmpMove.first;
@@ -65,11 +68,11 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
             best_move_t tmpMove = minimaxSearchAB(depth - 1, grid, true, alpha, beta);
             grid[move.first][move.second] = 0;
 
-            if (tmpMove.first < beta)
-                beta = tmpMove.first;
             if (tmpMove.first <= alpha)
                 return tmpMove;
-            
+            if (tmpMove.first < beta)
+                beta = tmpMove.first;
+
             if (tmpMove.first < bestMove.first) {
                 bestMove.first = tmpMove.first;
                 bestMove.second = move;
@@ -79,14 +82,14 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
     return bestMove;
 }
 
-move_t calculateNextMove(char **grid, int depth)
+move_t calculateNextMove(char **grid, int depth, bool is_ia)
 {
-    move_t finish = check_finishing_move(grid);
+    move_t finish = check_finishing_move(grid, is_ia);
 
     if (finish.first >= 0 && finish.second >= 0)
         return finish;
 
-    best_move_t bestMove = minimaxSearchAB(depth, grid, true, -1.0, 100000000);
+    best_move_t bestMove = minimaxSearchAB(depth, grid, is_ia, -1.0, (unsigned)(-1));
 
     return (bestMove.second.first < 0) ? move_t(0, 0) : bestMove.second;
 }

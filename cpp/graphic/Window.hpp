@@ -15,12 +15,16 @@ private:
     sf::Text m_new_round;
 
 public:
-    bool is_thread;
+    move_t last_move;
+    int mode;
+    bool is_pause;
+    sf::Sprite white_pebble;
+    sf::Sprite black_pebble;
+    move_list moves;
+
     Window(sf::VideoMode mode, std::string name, sf::Uint8 style);
     ~Window();
 
-    sf::Sprite white_pebble;
-    sf::Sprite black_pebble;
 
     char **get_grid(void) {return (char **)m_grid;}
     bool get_is_ia_thinking(void) {return m_is_ia_thinking;}
@@ -38,3 +42,4 @@ public:
 
 void draw_grid(Window &window);
 void print_winner(Window &window);
+void play_ai(Window &window, bool is_ia = true);

@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <thread>
-
-void play_ai(Window &window);
+#include <unistd.h>
 
 void manage_mouse_release(sf::Event &ev, Window &window)
 {
@@ -18,71 +17,147 @@ void manage_mouse_release(sf::Event &ev, Window &window)
     window[x][y] = 1;
     print_winner(window);
     window.set_is_ia_thinking(true);
-    window.is_thread = false;
 }
 
-void reset_window(Window &win)
+void reset_window(Window &win, bool *gen, int *z)
 {
     char **grid = win.get_grid();
 
     win.set_is_ia_thinking(false);
-    win.is_thread = false;
     win.set_turn(1);
     win.change_victory(0);
+    if (gen)
+        *gen = true;
+    if (z)
+        *z = 0;
     for (int i = 0; i < SIZE; i++)
         memset(grid[i], 0, sizeof(char) * SIZE);
 }
 
-void poll_window_events(Window &window)
+void undo_last_move(Window &window, bool *gen)
+{
+    move_t m = window.moves.back();
+
+    window[m.first][m.second] = 0;
+    window.moves.pop_back();
+    if (window.moves.size() == 0)
+        *gen = true;
+}
+
+void manage_direction(Window &window, sf::Event &ev, int *i, bool *turn, bool *gen)
+{
+    if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Right)
+        window.is_pause = !window.is_pause;
+    if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Left) {
+        if (window.moves.size() == 0)
+            return;
+        undo_last_move(window, gen);
+        if (i)
+            *i += 1;
+        if (turn)
+            *turn = !(*turn);
+        window.change_victory(0);
+    }
+}
+
+void poll_window_events(Window &window, bool *gen, int *i, bool *turn)
 {
     sf::Event ev;
 
     while (window.pollEvent(ev)) {
         if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
             window.close();
-        if (ev.type == sf::Event::MouseButtonReleased && !window.get_is_ia_thinking())
+        if (!window.mode && ev.type == sf::Event::MouseButtonReleased && !window.get_is_ia_thinking())
             manage_mouse_release(ev, window);
         if (window.get_victory() && ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Enter)
-            reset_window(window);
+            reset_window(window, gen, i);
+        if (window.mode)
+            manage_direction(window, ev, i, turn, gen);
     }
+}
+
+void ai_playing(Window &window, bool turn = true)
+{
+    sf::Event ev;
+
+    play_ai(window, turn);
+    while (window.pollEvent(ev) && !window.mode)
+        if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
+            window.close();
 }
 
 void draw_window(Window &window)
 {
     window.clear(sf::Color(246,230,189, 255));
-    // Draw which player turn, players name and objects
+
     window.draw_texts();
-
-    // Draw grid
     draw_grid(window);
-    // Draw pebbles
+    if (!window.get_victory())
+        window.draw_ai_thinking();
 
-    // If is ai playing, draw a text
-    window.draw_ai_thinking();
-    // Draw players name and objects
-    // Draw which player turn
-    // If is ai, draw
     window.display();
 }
 
-int main(void)
+void game_loop(Window &window, bool *gen = nullptr, int *i = nullptr, bool *turn = nullptr)
 {
-    Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
-    sf::Event ev;
+    print_winner(window);
+    poll_window_events(window, gen, i, turn);
+    draw_window(window);
+}
 
+void gen_move(Window &window, bool &gen, bool &turn)
+{
+    move_t m(rand() % SIZE, rand() % SIZE);
+    window.moves.push_back(m);
+    window[m.first][m.second] = 1;
+    gen = false;
+    window.is_pause = true;
+    turn = true;   
+}
+
+void ai_vs_ai(Window &window)
+{
+    bool gen = true;
+    bool turn = true;
+
+    window.mode = 1;
+    window.is_pause = true;
+    srand(time(nullptr));
+    for (int i = 0; window.isOpen(); i++) {
+        game_loop(window, &gen, &i, &turn);
+        if (window.mode && gen && !window.is_pause)
+            gen_move(window, gen, turn);
+        if (window.is_pause || window.get_victory()) {
+            i--;
+            continue;
+        }
+        ai_playing(window, turn);
+        turn = !turn;
+        window.is_pause = true;
+    }
+}
+
+void player_vs_ai(Window &window)
+{
     while (window.isOpen()) {
-        poll_window_events(window);
-        draw_window(window);
-        if (window.get_is_ia_thinking() && !window.is_thread) {
-            window.is_thread = true;
-            play_ai(window);
-            print_winner(window);
-            while (window.pollEvent(ev))
-                if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
-                    window.close();
-            window.is_thread = false;
+        game_loop(window);
+        if (window.get_victory())
+            continue;
+        if (window.get_is_ia_thinking()) {
+            ai_playing(window);
             window.set_is_ia_thinking(false);
             window.set_turn(window.get_turn() + 1);
         }
     }
+}
+
+int main(int ac, char **av)
+{
+    Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
+
+    if (ac > 1 && av[1] == std::string("spectator_mode"))
+        ai_vs_ai(window);
+    else
+        player_vs_ai(window);
+    return 0;
 }

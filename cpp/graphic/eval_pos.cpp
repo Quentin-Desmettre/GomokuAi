@@ -70,12 +70,12 @@ int analyze_grid_for_color(char **grid, int color, bool is_my_turn)
             analyze_lines(grid, j, i, &columns, is_my_turn, color);
 
 
-            if (j < SIZE - i) {
+            if (j < SIZE - i && i < SIZE - 5) {
 
                 analyze_lines(grid, i + j, j, &diag_bl, is_my_turn, color);
                 analyze_lines(grid, (SIZE - 1) - (i + j), j, &diag_ul, is_my_turn, color);
 
-                if (j > 0 && i != SIZE - 5) {
+                if (j > 0) {
                     analyze_lines(grid, j - 1, i + j, &diag_ur, is_my_turn, color);
                     analyze_lines(grid, (SIZE - 1) - (j - 1), i + j, &diag_br, is_my_turn, color);
                 }

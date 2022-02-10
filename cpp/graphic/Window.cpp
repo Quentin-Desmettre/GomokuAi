@@ -23,7 +23,8 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
     sf::RenderWindow(mode, name, style),
     m_is_ia_thinking(false),
     turn(1),
-    is_thread(false)
+    mode(false),
+    is_pause(false)
 {
     victory = 0;
     sf::Vector2u size = getSize();
@@ -60,7 +61,7 @@ Window::Window(sf::VideoMode mode, std::string name, sf::Uint8 style):
 
 void Window::draw_ai_thinking()
 {
-    if (m_is_ia_thinking)
+    if (m_is_ia_thinking && !mode)
         draw(ai_thinking);
 }
 

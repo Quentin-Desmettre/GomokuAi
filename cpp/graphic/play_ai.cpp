@@ -4,9 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 
-void play_ai(Window &window)
+void play_ai(Window &window, bool is_ia)
 {
-    move_t move = calculateNextMove(window.get_grid(), 3);
+    move_t move = calculateNextMove(window.get_grid(), 3, window.mode ? is_ia : true);
 
-    window[move.first][move.second] = -1;
+    window.moves.push_back(move);
+    if (window.mode) {
+        if (is_ia)
+            window[move.first][move.second] = -1;
+        else
+            window[move.first][move.second] = 1;
+    } else
+        window[move.first][move.second] = -1;
+    window.last_move = move;
 }

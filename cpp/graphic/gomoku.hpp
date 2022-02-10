@@ -7,6 +7,7 @@
     #include <cstdio>
     #include <cstdlib>
     #include <iostream>
+
 static const int SIZE = 19;
 
 typedef std::pair<int, int> move_t;
@@ -17,6 +18,6 @@ unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn);
 int analyze_grid_for_color(char **grid, int color, bool is_my_turn);
 move_list possible_moves(char **grid);
 void print_grid(char **grid);
-move_t calculateNextMove(char **grid, int depth);
+move_t calculateNextMove(char **grid, int depth, bool is_ia);
 
 #endif
