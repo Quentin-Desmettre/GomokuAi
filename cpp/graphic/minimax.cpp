@@ -6,7 +6,7 @@ typedef std::pair<double, move_t> best_move_t;
 std::pair<int, int> analyze_ia_pos(char **grid, bool is_ia_turn)
 {
     int ia_score = analyze_grid_for_color(grid, -1, !is_ia_turn);
-    int player_score = analyze_grid_for_color(grid, 1, is_ia_turn);
+    int player_score = analyze_grid_for_color(grid, 1, is_ia_turn) * 20;
 
     if (player_score == 0)
         player_score = 1;
@@ -61,10 +61,10 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
 
         for (move_t move : allPossibleMoves) {
             grid[move.first][move.second] = is_black ? -1 : 1;
-            if (analyze_grid_for_color(grid, is_black ? 1 : -1, true) > 51000) {
-                grid[move.first][move.second] = 0;
-                continue;
-            }
+            // if (analyze_grid_for_color(grid, is_black ? 1 : -1, true) > 51000) {
+            //     grid[move.first][move.second] = 0;
+            //     continue;
+            // }
             best_move_t tmpMove = minimaxSearchAB(depth - 1, grid, false, alpha, beta, !is_black);
             grid[move.first][move.second] = 0;
 
@@ -72,7 +72,6 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
                 return tmpMove;
             if (tmpMove.first > alpha)
                 alpha = tmpMove.first;
-            
             if (tmpMove.first > bestMove.first) {
                 bestMove.first = tmpMove.first;
                 bestMove.second = move;
@@ -84,10 +83,10 @@ best_move_t minimaxSearchAB(int depth, char **grid, bool is_max, double alpha, d
 
         for (move_t move : allPossibleMoves) {
             grid[move.first][move.second] = is_black ? -1 : 1;
-            if (analyze_grid_for_color(grid, is_black ? 1 : -1, true) > 51000) {
-                grid[move.first][move.second] = 0;
-                continue;
-            }
+            // if (analyze_grid_for_color(grid, is_black ? 1 : -1, true) > 51000) {
+            //     grid[move.first][move.second] = 0;
+            //     continue;
+            // }
             best_move_t tmpMove = minimaxSearchAB(depth - 1, grid, true, alpha, beta, !is_black);
             grid[move.first][move.second] = 0;
 
