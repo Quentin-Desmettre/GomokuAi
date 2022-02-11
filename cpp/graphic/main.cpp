@@ -112,34 +112,16 @@ void game_loop(Window &window, bool *gen = nullptr, int *i = nullptr, bool *turn
     draw_window(window);
 }
 
-void gen_move(Window &window, bool &gen, bool &turn)
-{
-    // window[9][9] = 1;
-    // window.moves.push_back(move_t(9, 9));
-    // gen = false;
-    // window.is_pause = true;
-    // turn = true;
-    // return;
-    move_t m(rand() % SIZE, rand() % SIZE);
-    window.moves.push_back(m);
-    window[m.first][m.second] = 1;
-    gen = false;
-    window.is_pause = true;
-    turn = true;
-}
-
 void ai_vs_ai(Window &window)
 {
     bool gen = true;
-    bool turn = true;
+    bool turn = false;
 
     window.mode = 1;
     window.is_pause = true;
     srand(time(nullptr));
     for (int i = 0; window.isOpen(); i++) {
         game_loop(window, &gen, &i, &turn);
-        if (window.mode && gen && !window.is_pause)
-            gen_move(window, gen, turn);
         if (window.is_pause || window.get_victory()) {
             i--;
             continue;
@@ -152,10 +134,25 @@ void ai_vs_ai(Window &window)
 
 void player_vs_ai(Window &window)
 {
+    srand(time(nullptr));
+    int is_ai_first = rand() % 2;
+    bool is_victory = false;
+
+    if (is_ai_first)
+        ai_playing(window);
     while (window.isOpen()) {
         game_loop(window);
-        if (window.get_victory())
+        if (window.get_victory()) {
+            is_victory = true;
             continue;
+        }
+        if (is_victory) {
+            is_ai_first = rand() % 2;
+            if (is_ai_first)
+                ai_playing(window);
+            is_victory = false;
+            continue;
+        }
         if (window.get_is_ia_thinking()) {
             ai_playing(window);
             window.set_is_ia_thinking(false);

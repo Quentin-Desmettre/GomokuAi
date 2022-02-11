@@ -12,7 +12,9 @@
 
 static const int SIZE = 19;
 
-typedef std::pair<int, int> move_t;
+typedef long ul;
+
+typedef std::pair<ul, ul> move_t;
 typedef std::vector<move_t> move_list;
 
 int who_won(char **grid);
@@ -21,5 +23,6 @@ int analyze_grid_for_color(char **grid, int color, bool is_my_turn);
 move_list possible_moves(char **grid);
 void print_grid(char **grid);
 move_t calculateNextMove(char **grid, int depth, bool is_ia);
+move_t check_adv_finish(char **grid, bool is_ia);
 
 #endif

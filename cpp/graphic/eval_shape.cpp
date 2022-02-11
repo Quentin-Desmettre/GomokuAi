@@ -8,27 +8,27 @@ unsigned eval_shape(unsigned count, unsigned open_ends, bool currentTurn)
     switch (count) {
     case 5:
         if (currentTurn)
-            return WIN_SCORE;
+            return WIN_SCORE * 2;
         else
-            return WIN_SCORE;
+            return WIN_SCORE * 2;
     case 4:
         if (currentTurn)
-            return WIN_GUARANTEE;
+            return WIN_GUARANTEE * 2;
         else
-            return (open_ends == 2) ? WIN_GUARANTEE / 4 : 200;
+            return (open_ends == 2) ? WIN_GUARANTEE / 2 : 400;
     case 3:
         if (open_ends == 2)
-            return currentTurn ? 50000 : 200;
+            return currentTurn ? 200000 : 400;
         else
-            return currentTurn ? 10 : 5;
+            return currentTurn ? 20 : 10;
     case 2:
         if (open_ends == 2)
-            return currentTurn ? 7 : 5;
+            return currentTurn ? 14 : 10;
         else
-            return 3;
+            return 6;
     case 1:
         return 1;
     default:
-        return WIN_GUARANTEE * 2;
+        return WIN_GUARANTEE * 4;
     }
 }
