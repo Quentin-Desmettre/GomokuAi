@@ -172,11 +172,23 @@ void pvp_mode(Window &window)
     }
 }
 
+int usage(void)
+{
+    std::cout << "Gomoku AI\n\n" << std::endl;
+    std::cout << "OPTIONS\n" << std::endl;
+    std::cout << "    ./gomoku              play against the AI" << std::endl;
+    std::cout << "    ./gomoku spectator    Using the left/right arrow keys, let the AI play against herself" << std::endl;
+    std::cout << "    ./gomoku 2player      Play locally against another player\n\n" << std::endl;
+    return 0;
+}
+
 int main(int ac, char **av)
 {
+
+    if (ac > 1 && av[1] == std::string("-h"))
+        return usage();
     Window window(sf::VideoMode::getDesktopMode(), "Gomoku", sf::Style::Fullscreen);
     window.setFramerateLimit(24);
-
     if (ac > 1 && av[1] == std::string("spectator"))
         ai_vs_ai(window);
     else if (ac > 1 && av[1] == std::string("2player"))
