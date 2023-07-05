@@ -1,4 +1,4 @@
-# gomoku_ai
+# GomokuAI
 
 Simple AI for the gomoku game.
 
@@ -8,25 +8,20 @@ The algorithm used was Minimax, with alpha-beta pruning.
 
 For a video demonstration, see [This video](https://www.youtube.com/watch?v=zxBR_Yg8q_o).
 
-## Installation
+## Dependencies
 
-Clone the repository. For the graphical version, make sure you have [SFML](https://www.sfml-dev.org/download.php) installed and that your computer runs on Linux.
+- g++ ([Linux](https://linuxhint.com/install-and-use-g-on-ubuntu/), [Windows](https://www3.cs.stonybrook.edu/~alee/g++/g++.html))
+- [Make](https://askubuntu.com/questions/161104/how-do-i-install-make)
+- [SFML](https://www.sfml-dev.org/download.php)
 
+## Build
 ```bash
-git clone https://github.com/Quentin-Desmettre/gomoku_ai.git
+# Issue this command first if you want the graphical version
+# cd graphical
+make
 ```
 
 ## Usage
-
 ```bash
-cd gomoku_ai
-
-#if you want the graphical version
-cd graphical
-
-# build the program
-make
-
-# launch it
 ./gomoku
 ```
